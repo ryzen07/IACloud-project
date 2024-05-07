@@ -1,0 +1,34 @@
+﻿@page "/menuprincipal"
+@using BlazorApp1.Models
+@using BlazorApp1.Service
+@inject IAcollection Servicio
+
+<h3>ComponenteMenuPrincipal</h3>
+@if (modelo == null)
+    {
+    <p><em>Cargando..</em></p>
+} else
+{
+  //  @foreach(var d in _modelo.response)
+  //  {
+        <div>
+        <h4> @modelo.response </h4>
+        </div>
+  //  }
+}
+
+@code 
+{
+    private ModeloParaRespuesta modelo { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ModeloConsulta data = new ModeloConsulta();
+
+        data.stream = false;
+        data.prompt = "explicame porque el cielo es azul";
+        data.model = "llama3";
+
+        modelo = await Servicio.consultaPost(data);
+    }
+}
